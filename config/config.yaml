@@ -1,0 +1,23 @@
+#reads or bam input format options
+input_format: "reads"
+
+#------------------------------------
+# Resource options
+#------------------------------------
+resources: "/Users/margotlavitt/resources/"
+# Reference database from alignment (Default: MGV viruses)
+ref_db: "/Users/margotlavitt/resources/mgv_db/mgv_votu_reps.fasta"
+ref_db_meta: "/Users/margotlavitt/resources/mgv_db/mgv_metadata.tsv"
+
+#------------------------------------
+# Analysis options
+#------------------------------------
+results: "/Users/margotlavitt/Sum22/HoffLab_InStrain/results/"
+
+#------------------------------------
+# Rule customization 
+#------------------------------------ 
+min_breadth: 50
+### Extra Args ###
+inStrain_profile_extra_args: ""
+inStrain_compare_extra_args: ""

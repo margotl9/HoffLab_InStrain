@@ -54,41 +54,40 @@ rule sort_bam:
         samtools sort {input.bam} -o {output.sort}
         """
 
-rule reference_db_to_fna:
-    input:
-        config["ref_db"]
-    output:
-        resources+"ref_contig.fna"
-    conda:
-        "../envs/instrain.yml"
-    shell:
-        """
-        prodigal -i {input} \
-        -o {output}
-        """
+# rule reference_db_to_fna:
+#     input:
+#         config["gene_fasta"]
+#     output:
+#         results+"00_INPUT/ref_gene_contig.fna"
+#     conda:
+#         "./envs/instrain.yml"
+#     shell:
+#         """
+#         prodigal -i {input} \
+#         -o {output}
+#         """
 
 rule inStrain_profile:
     input:
-        fasta=config["ref_db"],
+        mapping_fasta=config["mapping"],
         bam=results+"sorted_bam_files/{sample}_sorted.bam",
+        fna=config["gene_fna"]
     output:
         results+"01_instrain_profile/{sample}_profile.IS/output/{sample}_profile.IS_linkage.tsv",
     params:
         out_dir=results+"01_instrain_profile/{sample}_profile.IS",
         min_breadth=config["min_breadth"],
         extra_args=config["inStrain_profile_extra_args"]
-
     conda:
         "./envs/instrain.yml"
-    # -g {input.fna} \
     shell:
         """
         inStrain profile \
         {input.bam} \
-        {input.fasta} \
+        {input.mapping_fasta} \
         -o {params.out_dir} \
+        -g {input.fna} \
         --skip_mm_profiling \
-        --skip_genome_wide \
         --min_cov {params.min_breadth} \
         {params.extra_args}
         """
@@ -105,7 +104,7 @@ rule inStrain_compare:
         results+"02_instrain_compare/compare.IS/output/compare.IS_comparisonsTable.tsv",
     params:
         bam=expand(results+"sorted_bam_files/{sample}_sorted.bam", sample=sample),
-        profile=expand(results+"01_instrain_profile/{sample}_profile.IS", sample=sample),
+        profile=expand(results+"01_instrain_profile/{sample}_profile.IS/", sample=sample),
         out_dir=results+"02_instrain_compare/compare.IS",
         extra_args=config["inStrain_compare_extra_args"]
 
@@ -116,11 +115,10 @@ rule inStrain_compare:
         inStrain compare \
         -i {params.profile} \
         -o {params.out_dir} \
-        -bams {params.bam} \
         {params.extra_args}
         """
 
 
 rule all:
     input:
-        results+"02_instrain_compare/compare.IS/output/compare.IS_comparisonsTable.tsv"
+        expand(results+"01_instrain_profile/{sample}_profile.IS/output/{sample}_profile.IS_linkage.tsv", sample=sample)

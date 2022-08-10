@@ -5,9 +5,10 @@ input_format: "reads"
 # Resource options
 #------------------------------------
 resources: "/Users/margotlavitt/resources/"
-# Reference database from alignment (Default: MGV viruses)
-ref_db: "/Users/margotlavitt/resources/mgv_db/mgv_votu_reps.fasta"
-ref_db_meta: "/Users/margotlavitt/resources/mgv_db/mgv_metadata.tsv"
+# Mapping file from alignment (Default: MGV viruses)
+mapping: "/Users/margotlavitt/resources/input/instrain_test_data/all_genomes.fasta"
+gene_fasta: ""
+gene_fna: "/Users/margotlavitt/resources/input/instrain_test_data/all_genomes_genes.fna"
 
 #------------------------------------
 # Analysis options
@@ -16,7 +17,7 @@ results: "/Users/margotlavitt/Sum22/HoffLab_InStrain/results/"
 
 #------------------------------------
 # Rule customization 
-#------------------------------------ 
+#------------------------------------
 min_breadth: 50
 ### Extra Args ###
 inStrain_profile_extra_args: ""

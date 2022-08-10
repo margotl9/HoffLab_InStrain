@@ -22,3 +22,6 @@ min_breadth: 50
 ### Extra Args ###
 inStrain_profile_extra_args: ""
 inStrain_compare_extra_args: ""
+bowtie_build_extra_args: ""
+bowtie_align_extra_args: ""
+bowtie_threads: 1

@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+  - default
+
+dependencies:
+  - bowtie2
+  - samtools

@@ -1,2 +1,2 @@
 assembly	sample	bam	R1	R2
-test	oral_enriched	/Users/margotlavitt/resources/input/instrain_test_data/oral_enriched.bam	/Users/margotlavitt/resources/input/instrain_test_data/257_R1.fastq	/Users/margotlavitt/resources/input/instrain_test_data/257_R2.fastq
+test	oral_enriched	/Users/margotlavitt/resources/input/instrain_test_data/oral_enriched.bam		

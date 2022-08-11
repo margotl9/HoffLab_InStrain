@@ -36,7 +36,7 @@ elif config['input_format'] == 'reads':
 # --------------------------------------------------
 # IF Input = Reads
 # --------------------------------------------------
-# symlink input paths to new paths (abundance and sample)
+# symlink input paths to new paths
 rule symlink_reads:
     input:
         R1=lambda wildcards: samples_df[
@@ -85,10 +85,8 @@ rule bowtie2_align_reads:
     input:
         R1=results+"00_INPUT/{assembly_sample}_paired_1.fastq.gz",
         R2=results+"00_INPUT/{assembly_sample}_paired_2.fastq.gz",
-        # R1S=results
-        # + "01_READ_PREPROCESSING/03_kneaddata/{assembly_sample}_unmatched_1.fastq",
-        # R2S=results
-        # + "01_READ_PREPROCESSING/03_kneaddata/{assembly_sample}_unmatched_2.fastq",
+        # R1S
+        # R2S
         db=results+"00_INPUT/00_bowtie2/map.1.bt2",
     output:
         results
@@ -218,11 +216,12 @@ rule inStrain_compare:
         inStrain compare \
         -i {params.profile} \
         -o {params.out_dir} \
-        -bams {params.bam} \
+        --bams {params.bam} \
         {params.extra_args}
         """
 
 
 rule all:
     input:
-        expand(results+"01_instrain_profile/{assembly_sample}_profile.IS/output/{assembly_sample}_profile.IS_linkage.tsv", assembly_sample=assembly_sample)
+        results+"02_instrain_compare/compare.IS/output/compare.IS_comparisonsTable.tsv",
+

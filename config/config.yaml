@@ -1,13 +1,12 @@
-#reads or bam input format options
-input_format: "reads"
+#reads or bam input format options (Default: bam)
+input_format: "bam"
 
 #------------------------------------
 # Resource options
 #------------------------------------
 resources: "/Users/margotlavitt/resources/"
-# Mapping file from alignment (Default: MGV viruses)
+# Mapping file from alignment
 mapping: "/Users/margotlavitt/resources/input/instrain_test_data/all_genomes.fasta"
-gene_fasta: ""
 gene_fna: "/Users/margotlavitt/resources/input/instrain_test_data/all_genomes_genes.fna"
 
 #------------------------------------

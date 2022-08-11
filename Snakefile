@@ -21,8 +21,20 @@ results = config["results"]
 resources = config["resources"]
 
 
+
 # --------------------------------------------------
-# Reads Rules
+# Rules
+# --------------------------------------------------
+#if input file is bam or reads
+picked_bam = ""
+if config['input_format'] == 'bam':
+    picked_bam = results + "00_INPUT/{assembly_sample}.bam"
+elif config['input_format'] == 'reads':
+    picked_bam = results + "00_INPUT/00_bowtie2/bam_files/{assembly_sample}.bam"
+
+
+# --------------------------------------------------
+# IF Input = Reads
 # --------------------------------------------------
 # symlink input paths to new paths (abundance and sample)
 rule symlink_reads:
@@ -112,7 +124,7 @@ rule bowtie2_align_reads:
 
 
 # --------------------------------------------------
-# Bam Rules
+# IF Input = Bam 
 # --------------------------------------------------
 # symlink input paths to new paths
 rule symlink_bam:
@@ -129,13 +141,6 @@ rule symlink_bam:
         ln -s {input.bam} {output.bam}
         """
 
-
-#if input file is bam or reads
-picked_bam = ""
-if config['input_format'] == 'bam':
-    picked_bam = results + "00_INPUT/{assembly_sample}.bam"
-elif config['input_format'] == 'reads':
-    picked_bam = results + "00_INPUT/00_bowtie2/bam_files/{assembly_sample}.bam"
 
 # -----------------------------------------------------
 # 01 InStrain profile
@@ -213,6 +218,7 @@ rule inStrain_compare:
         inStrain compare \
         -i {params.profile} \
         -o {params.out_dir} \
+        -bams {params.bam} \
         {params.extra_args}
         """
 
